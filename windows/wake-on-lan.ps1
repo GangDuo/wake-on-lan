@@ -16,6 +16,11 @@ class MagicPacket {
     }
 
     [void] Broadcast() {
+        $udpClient = new-object System.Net.Sockets.UdpClient;
+        $wakeUpTarget = [System.Net.IPAddress]::Broadcast;
+        $udpClient.Connect($wakeUpTarget, 9);
+        $udpClient.Send($this.Value, $this.Value.Length) | out-null;
+        $udpClient.Close();
     }
 }
 
