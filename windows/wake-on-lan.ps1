@@ -8,7 +8,11 @@ class MacAddress {
 }
 
 class MagicPacket {
+    [byte[]] $Value;
+
     MagicPacket([MacAddress] $macAddress) {
+        $this.Value = ([byte[]](@(0xff) * 6)) + $macAddress.Value * 16;
+        Write-Verbose ("MagicPacket: " + $this.Value);
     }
 
     [void] Broadcast() {
